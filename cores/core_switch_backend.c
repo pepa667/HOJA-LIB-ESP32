@@ -37,6 +37,7 @@ void ns_bt_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
                 ESP_LOGI(TAG, "authentication success: %s", param->auth_cmpl.device_name);
                 esp_log_buffer_hex(TAG, param->auth_cmpl.bda, ESP_BD_ADDR_LEN);
                 ns_connected = true;
+                hoja_event_cb(HOJA_EVT_BT, HEVT_BT_CONNECTED, 0x00);
             } else {
                 ESP_LOGI(TAG, "authentication failed, status:%d", param->auth_cmpl.stat);
             }
@@ -116,6 +117,7 @@ void ns_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
                     ESP_LOGI(TAG, "connecting...");
                 } else if (param->open.conn_status == ESP_HIDD_CONN_STATE_CONNECTED) {
                     ns_connected = true;
+                    hoja_event_cb(HOJA_EVT_BT, HEVT_BT_CONNECTED, 0x00);
                     ESP_LOGI(TAG, "connected to %02x:%02x:%02x:%02x:%02x:%02x", param->open.bd_addr[0],
                             param->open.bd_addr[1], param->open.bd_addr[2], param->open.bd_addr[3], param->open.bd_addr[4],
                             param->open.bd_addr[5]);
@@ -162,6 +164,7 @@ void ns_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
                 ESP_LOGI(TAG, "making self non-discoverable and non-connectable.");
                 esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
             }
+            hoja_event_cb(HOJA_EVT_BT, HEVT_BT_DISCONNECT, 0x00);
             break;
         case ESP_HIDD_SEND_REPORT_EVT:
             break;
@@ -189,7 +192,11 @@ void ns_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
                     ns_connected = false;
                     ESP_LOGI(TAG, "disconnected!");
                     vTaskDelay(3000 / portTICK_PERIOD_MS);
-                    if (!ns_connected) core_ns_stop();
+                    if (!ns_connected)
+                    {
+                        core_ns_stop();
+                        hoja_event_cb(HOJA_EVT_BT, HEVT_BT_DISCONNECT, 0x00);
+                    }
                 } else {
                     ESP_LOGI(TAG, "unknown connection status");
                 }
@@ -349,31 +356,34 @@ hoja_err_t core_ns_start(void)
 
     hoja_event_cb(HOJA_EVT_BT, HEVT_BT_STARTED, 0x00);
 
-    // Delay 1 seconds to see if console initiates connection
-    vTaskDelay(1000/portTICK_PERIOD_MS);
-
-    if (loaded_settings.ns_controller_paired & !ns_connected)
+    while (!ns_connected)
     {
-        // Connect to paired host device if we haven't connected already
-        if (esp_bt_hid_device_connect(loaded_settings.ns_host_bt_address) != ESP_OK)
+        // Delay 1 seconds to see if console initiates connection
+        vTaskDelay(1000/portTICK_PERIOD_MS);
+
+        if (loaded_settings.ns_controller_paired & !ns_connected)
         {
-            ESP_LOGI(TAG, "Failed to connect to paired switch. Setting scannable and discoverable.");
-            esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
+            // Connect to paired host device if we haven't connected already
+            if (esp_bt_hid_device_connect(loaded_settings.ns_host_bt_address) != ESP_OK)
+            {
+                ESP_LOGI(TAG, "Failed to connect to paired switch. Setting scannable and discoverable.");
+                esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
+            }
+        }
+        else
+        {
+            ESP_LOGI(TAG, "Controller already connected");
         }
     }
-    else
-    {
-        ESP_LOGI(TAG, "Controller already connected");
-    }
 
-    vTaskDelay(1500/portTICK_PERIOD_MS);
-    if (!ns_connected)
-    {
-        // If still not connected, return failure.
-        ESP_LOGI(TAG, "Not connected to Switch. Fall back to another mode.");
-        core_ns_stop();
-        return HOJA_FAIL;
-    }
+    // vTaskDelay(1500/portTICK_PERIOD_MS);
+    // if (!ns_connected)
+    // {
+    //     // If still not connected, return failure.
+    //     ESP_LOGI(TAG, "Not connected to Switch. Fall back to another mode.");
+    //     core_ns_stop();
+    //     return HOJA_FAIL;
+    // }
 
     return HOJA_OK;
 }

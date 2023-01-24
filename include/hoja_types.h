@@ -119,6 +119,7 @@ typedef enum
     HEVT_BT_CONNECTING  = 1,
     HEVT_BT_PAIRED      = 2,
     HEVT_BT_DISCONNECT  = 3,
+    HEVT_BT_CONNECTED   = 4,
 } hoja_bt_event_t;
 
 /**
