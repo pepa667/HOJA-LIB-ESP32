@@ -145,6 +145,7 @@ void ns_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
             break;
         case ESP_HIDD_CLOSE_EVT:
             ESP_LOGI(TAG, "ESP_HIDD_CLOSE_EVT");
+            hoja_event_cb(HOJA_EVT_BT, HEVT_BT_DISCONNECT, 0x00);
             if (param->close.status == ESP_HIDD_SUCCESS) {
                 if (param->close.conn_status == ESP_HIDD_CONN_STATE_DISCONNECTING) {
                     ESP_LOGI(TAG, "disconnecting...");
@@ -164,7 +165,6 @@ void ns_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
                 ESP_LOGI(TAG, "making self non-discoverable and non-connectable.");
                 esp_bt_gap_set_scan_mode(ESP_BT_NON_CONNECTABLE, ESP_BT_NON_DISCOVERABLE);
             }
-            hoja_event_cb(HOJA_EVT_BT, HEVT_BT_DISCONNECT, 0x00);
             break;
         case ESP_HIDD_SEND_REPORT_EVT:
             break;
