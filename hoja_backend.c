@@ -4,6 +4,7 @@
 
 hoja_button_data_s hoja_button_data = {};
 hoja_analog_data_s hoja_analog_data = {};
+hoja_rumble_data_s hoja_rumble_data = {};
 uint16_t sleep_timer = 0;
 
 // Resets all button data set

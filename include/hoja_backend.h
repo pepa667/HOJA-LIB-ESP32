@@ -5,6 +5,7 @@
 
 extern hoja_button_data_s hoja_button_data;
 extern hoja_analog_data_s hoja_analog_data;
+extern hoja_rumble_data_s hoja_rumble_data;
 
 // Function to reset all buttons to neutral values
 void hoja_button_reset();

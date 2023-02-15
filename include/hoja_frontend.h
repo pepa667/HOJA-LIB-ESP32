@@ -41,9 +41,11 @@ hoja_err_t hoja_reset_pairing(hoja_core_t core);
 typedef void (*hoja_button_callback_t) (hoja_button_data_s *);
 typedef void (*hoja_analog_callback_t) (hoja_analog_data_s *);
 typedef void (*hoja_event_callback_t) (hoja_event_type_t, uint8_t, uint8_t);
+typedef void (*hoja_rumble_callback_t) (hoja_rumble_data_s *);
 extern hoja_button_callback_t hoja_button_cb;
 extern hoja_analog_callback_t hoja_analog_cb;
 extern hoja_event_callback_t hoja_event_cb;
+extern hoja_rumble_callback_t hoja_rumble_cb;
 
 // Function for button callback must be as follows (function name can change)
 // Ex: void local_button_cb(hoja_button_data_s *button_data)
@@ -54,5 +56,8 @@ hoja_err_t hoja_register_analog_callback(hoja_analog_callback_t func);
 
 // Ex: void local_event_cb(hoja_event_type_t type, uint8_t evt, uint8_t param)
 hoja_err_t hoja_register_event_callback(hoja_event_callback_t func);
+
+// Ex: void local_rumble_cb(hoja_rumble_data_s *rumble_data)
+hoja_err_t hoja_register_rumble_callback(hoja_rumble_callback_t func);
 
 #endif

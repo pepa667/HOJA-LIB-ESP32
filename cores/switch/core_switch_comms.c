@@ -44,12 +44,6 @@ void ns_comms_handle_command(uint8_t report_id, uint16_t len, uint8_t* p_data)
             // Set input report ID
             ns_report_setid(COMM_RID_SUBCMDSTANDARD);
 
-            // Extract rumble data
-            //vibration_data_s vibration_data = rbc_vibration_parse(p_data);
-
-            // Handle rumble data
-            //rbc_vibration_handle(vibration_data);
-
             // Pass off to the sub-command handler.
             ns_comms_handle_subcommand(p_data[9], len, p_data);
 
@@ -60,8 +54,11 @@ void ns_comms_handle_command(uint8_t report_id, uint16_t len, uint8_t* p_data)
 
         // Just Rumble data
         case COMM_RUMBLE_ONLY:
-            // Not implemented
+            // Extract rumble data
+            switch_vibration_parse(p_data);
 
+            // Handle rumble data
+            switch_vibration_handle();
             break;
 
         // UNIMPLEMENTED, RETURN STANDARD FULL REPORT
