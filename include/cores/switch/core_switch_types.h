@@ -8,7 +8,7 @@ typedef enum
 {
     NS_TYPE_UNSET,
     NS_TYPE_PROCON,
-    NS_TYPE_N64,
+    NS_TYPE_BBPC,
     NS_TYPE_JOYCON_L,
     NS_TYPE_JOYCON_R,
     NS_TYPE_SNES,
@@ -171,11 +171,11 @@ typedef struct
     {
         struct
         {
-            // Y and C-Up (N64)
+            // Y and C-Up (BBPC)
             uint8_t b_y       : 1;
             
             
-            // X and C-Left (N64)
+            // X and C-Left (BBPC)
             uint8_t b_x       : 1;
             
             uint8_t b_b       : 1;
@@ -184,7 +184,7 @@ typedef struct
             uint8_t t_r_sl    : 1;
             uint8_t t_r       : 1;
 
-            // ZR and C-Down (N64)
+            // ZR and C-Down (BBPC)
             uint8_t t_zr      : 1;
         };
         uint8_t right_buttons;
@@ -193,7 +193,7 @@ typedef struct
     {
         struct
         {
-            // Minus and C-Right (N64)
+            // Minus and C-Right (BBPC)
             uint8_t b_minus     : 1; 
             
             // Plus and Start
@@ -220,7 +220,7 @@ typedef struct
             uint8_t t_l_sl    : 1;
             uint8_t t_l       : 1;
 
-            // ZL and Z (N64)
+            // ZL and Z (BBPC)
             uint8_t t_zl      : 1;
             
         };

@@ -67,7 +67,7 @@ void local_button_cb()
     hoja_button_data.dpad_up        |= !util_getbit(register_read_low, GPIO_BTN_DPAD_U);
 
     // ABXY buttons are not labelled as such in the HOJA backend.
-    // This is because this core supports many controller types ranging from N64 to XInput.
+    // This is because this core supports many controller types ranging from BBPC to XInput.
     // The position of the buttons is more important than the lettering here. 
     hoja_button_data.button_right   |= !util_getbit(register_read_low, GPIO_BTN_A);
     hoja_button_data.button_down    |= !util_getbit(register_read_low, GPIO_BTN_B);

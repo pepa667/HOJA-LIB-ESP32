@@ -7,7 +7,7 @@ typedef enum
 {
     ANALOG_SCALER_GC    = 0,        // Scales values between 28 and 228 for real GameCube range
     ANALOG_SCALER_8BIT  = 1,        // Scales values from 12 bit values to 8 bit
-    ANALOG_SCALER_N64   = 2,        // Scales values for N64 range (not yet implemented)
+    ANALOG_SCALER_BBPC   = 2,        // Scales values for BBPC range (not yet implemented)
 } util_analog_scaler_t;
 
 typedef enum
