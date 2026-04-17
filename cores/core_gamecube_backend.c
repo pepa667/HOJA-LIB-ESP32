@@ -183,7 +183,7 @@ void gamecube_init(void)
 {
     const char* TAG = "gamecube_init";
 
-    periph_ll_enable_clk_clear_rst(PERIPH_RMT_MODULE);
+    _rmt_compat_enable_clk();
 
     JB_RMT_FIFO = RMT_DATA_MODE_MEM;
 
@@ -290,7 +290,7 @@ hoja_err_t core_gamecube_start()
 void core_gamecube_stop()
 {
     const char* TAG = "core_gamecube_stop";
-    periph_ll_enable_clk_clear_rst(PERIPH_RMT_MODULE);
+    _rmt_compat_enable_clk();
 
     rmt_isr_deregister(gc_rmt_isr_handle);
 }

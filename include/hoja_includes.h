@@ -14,7 +14,8 @@
 #include "sdkconfig.h"
 
 #include <hal/clk_gate_ll.h>
-#include <hal/rmt_ll.h>
+// #include <hal/rmt_ll.h> // Removed: Not present in this ESP-IDF version
+#include "rmt_legacy_compat.h"
 #include <esp32/rom/ets_sys.h>
 #include <esp_cpu.h>
 
@@ -43,13 +44,13 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 
-#include "driver/spi_slave.h"
+#include <driver/spi_slave.h>
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "driver/i2c.h"
-#include "driver/adc.h"
+// #include "driver/adc.h" // Removed: Legacy ADC driver not present in ESP-IDF v6.1
 #include "driver/pulse_cnt.h"
-#include "driver/rmt.h"
+// #include "driver/rmt.h" // Removed: Legacy RMT driver not present in ESP-IDF v6.1
 #include "driver/rtc_io.h"
 
 #include "soc/soc.h"
@@ -60,8 +61,8 @@
 #include "soc/io_mux_reg.h"
 #include "soc/spi_periph.h"
 
-#include "rom/ets_sys.h"
-#include "rom/gpio.h"
+// #include "rom/ets_sys.h" // Removed: Use esp32/rom/ets_sys.h instead in ESP-IDF v6.1
+// #include "rom/gpio.h" // Removed: Use esp_rom_gpio.h instead in ESP-IDF v6.1
 
 #include "soc/gpio_sig_map.h"
 #include "soc/gpio_periph.h"

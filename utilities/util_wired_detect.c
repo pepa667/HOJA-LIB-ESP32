@@ -145,12 +145,12 @@ void util_wired_detect_task(void * params)
             case DETECT_NONE:
                 break;
             case DETECT_JOYBUS:
-                hoja_event_cb(HOJA_EVT_WIRED, HEVT_WIRED_JOYBUS_DETECT, NULL);
+                hoja_event_cb(HOJA_EVT_WIRED, HEVT_WIRED_JOYBUS_DETECT, 0x00);
                 vTaskDelete(util_wired_loop_task);
                 util_wired_loop_task = NULL;
                 break;
             case DETECT_SNES:
-                hoja_event_cb(HOJA_EVT_WIRED, HEVT_WIRED_SNES_DETECT, NULL);
+                hoja_event_cb(HOJA_EVT_WIRED, HEVT_WIRED_SNES_DETECT, 0x00);
                 vTaskDelete(util_wired_loop_task);
                 util_wired_loop_task = NULL;
                 break;
@@ -201,7 +201,7 @@ hoja_err_t util_wired_detect_loop(void)
         util_wired_loop_task = NULL;
     }
 
-    xTaskCreatePinnedToCore(util_wired_detect_task, "Wired Utility Detect Loop", 4048, NULL, 2, util_wired_loop_task, HOJA_CORE_CPU);
+    xTaskCreatePinnedToCore(util_wired_detect_task, "Wired Utility Detect Loop", 4048, NULL, 2, &util_wired_loop_task, HOJA_CORE_CPU);
 
     return HOJA_OK;
 }

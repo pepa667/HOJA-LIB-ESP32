@@ -15,7 +15,9 @@ idf_component_register(
     INCLUDE_DIRS "include" "include/cores"
     "include/resources" "include/utilities" "include/cores/switch"
     REQUIRES "bt" "hal" "xtensa"
-    "riscv" "esp_rom" "driver" "esp_common" 
+    "esp_rom" "driver" "esp_common" 
     "soc" "esp_hw_support" "esp_system"
-    "newlib" "spi_flash" "log" "heap"
-    "freertos" "nvs_flash" "esp_hid")
+    "spi_flash" "log" "heap"
+    "freertos" "nvs_flash" "esp_hid" "esp_hw_support"
+    "esp_driver_gpio" "esp_driver_spi" "esp_driver_pcnt"
+    "esp_hal_clock" "esp_timer" "esp_hal_rmt")

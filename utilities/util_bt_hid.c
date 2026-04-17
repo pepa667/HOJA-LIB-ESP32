@@ -1,4 +1,5 @@
 #include "util_bt_hid.h"
+#include "esp_log_buffer.h"
 
 esp_bt_controller_config_t bt_cfg = {0};
 TaskHandle_t _util_bt_timeout_task = NULL;
@@ -29,10 +30,6 @@ void util_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
         case ESP_HIDD_REGISTER_APP_EVT:
             if (param->register_app.status == ESP_HIDD_SUCCESS) {
                 ESP_LOGI(TAG, "Register HIDD app parameters success!");
-                if(param->register_app.bd_addr == NULL)
-                {
-                    ESP_LOGI(TAG, "bd_addr is undefined!");
-                }
             } else {
                 ESP_LOGI(TAG, "Register HIDD app parameters failed!");
             }
@@ -375,7 +372,7 @@ hoja_err_t bt_register_app(util_bt_app_params_s *util_bt_app_params, esp_hid_dev
         return HOJA_FAIL;
     }
 
-    esp_bt_dev_set_device_name(hidd_device_config->device_name);
+    esp_bt_gap_set_device_name(hidd_device_config->device_name);
 
     if (advertise)
     {
@@ -512,7 +509,7 @@ hoja_err_t util_bluetooth_init(uint8_t *mac_address)
     else
     {
         ESP_LOGI(TAG, "Setting mac address...");
-        esp_log_buffer_hex(TAG, mac_address, 8);
+        ESP_LOG_BUFFER_HEX(TAG, mac_address, 8);
         esp_base_mac_addr_set(mac_address);
     }
 

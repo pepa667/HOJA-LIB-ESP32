@@ -81,10 +81,6 @@ void switch_bt_hidd_cb(esp_hidd_cb_event_t event, esp_hidd_cb_param_t *param)
         case ESP_HIDD_REGISTER_APP_EVT:
             if (param->register_app.status == ESP_HIDD_SUCCESS) {
                 ESP_LOGI(TAG, "Register HIDD app parameters success!");
-                if(param->register_app.bd_addr == NULL)
-                {
-                    ESP_LOGI(TAG, "bd_addr is undefined!");
-                }
             } else {
                 ESP_LOGI(TAG, "Register HIDD app parameters failed!");
             }

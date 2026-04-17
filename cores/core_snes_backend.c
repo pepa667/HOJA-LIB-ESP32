@@ -1,4 +1,5 @@
 #include "core_snes_backend.h"
+#include "esp_rom_gpio.h"
 
 volatile uint16_t snes_button_buffer= 0x5555;
 volatile bool  done = false;
@@ -58,7 +59,7 @@ void core_snes_stop()
     
     // Deinitialize SPI slave interface
     esp_err_t err;
-    err = spi_slave_free(VSPI_HOST);
+    err = spi_slave_free(SPI3_HOST);
     assert(err==ESP_OK);
 
     ESP_LOGI(TAG, "SNES Core stopped OK.");
@@ -119,16 +120,16 @@ void snes_task(void * parameters)
 
     // Enable input to peripheral from GPIO matrix
     // Set data output
-    gpio_matrix_out(CONFIG_HOJA_GPIO_NS_SERIAL, HSPIQ_OUT_IDX, false, false);
+    esp_rom_gpio_connect_out_signal(CONFIG_HOJA_GPIO_NS_SERIAL, HSPIQ_OUT_IDX, false, false);
     // Set data output to be enabled with bit
     GPIO.func_out_sel_cfg[CONFIG_HOJA_GPIO_NS_SERIAL].oen_sel = 1;
     GPIO.enable_w1ts = DATA_MASK;
 
     // CS latch input setup
-    gpio_matrix_in(CONFIG_HOJA_GPIO_NS_LATCH, HSPICS0_IN_IDX, false);
+    esp_rom_gpio_connect_in_signal(CONFIG_HOJA_GPIO_NS_LATCH, HSPICS0_IN_IDX, false);
 
     // CLOCK input setup
-    gpio_matrix_in(CONFIG_HOJA_GPIO_NS_CLOCK, HSPICLK_IN_IDX, false);
+    esp_rom_gpio_connect_in_signal(CONFIG_HOJA_GPIO_NS_CLOCK, HSPICLK_IN_IDX, false);
 
     // Set up SPI with custom stuff
     // Clear all first
