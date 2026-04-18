@@ -21,3 +21,4 @@ idf_component_register(
     "freertos" "nvs_flash" "esp_hid" "esp_hw_support"
     "esp_driver_gpio" "esp_driver_spi" "esp_driver_pcnt"
     "esp_hal_clock" "esp_timer" "esp_hal_rmt")
+target_compile_options(${COMPONENT_LIB} PRIVATE "-Wno-missing-field-initializers" "-Wno-braces" "-Wno-error")

@@ -20,7 +20,7 @@ void ns_controller_setup_memory(void)
             ns_controller_data.controller_type_primary = 0x03;
             ns_controller_data.controller_type_secondary = 0x02;
             break;
-        case NS_TYPE_BBPC:
+        case NS_TYPE_N64:
             ns_controller_data.controller_type_primary = 0x0C;
             ns_controller_data.controller_type_secondary = 0x11;
             break;

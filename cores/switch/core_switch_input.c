@@ -19,7 +19,7 @@ void ns_input_translate_full(ns_input_long_s *ns_input_long)
     ns_input_long->sb_left   = hoja_processed_buttons.button_stick_left;
     ns_input_long->sb_right  = hoja_processed_buttons.button_stick_right;
 
-    if (_ns_subcore == NS_TYPE_BBPC)
+    if (_ns_subcore == NS_TYPE_N64)
     {
         ns_input_long->b_a       = hoja_processed_buttons.button_down;
         ns_input_long->b_b       = hoja_processed_buttons.button_left;

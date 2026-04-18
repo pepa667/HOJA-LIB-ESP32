@@ -8,7 +8,7 @@ typedef enum
 {
     NS_TYPE_UNSET,
     NS_TYPE_PROCON,
-    NS_TYPE_BBPC,
+    NS_TYPE_N64,
     NS_TYPE_JOYCON_L,
     NS_TYPE_JOYCON_R,
     NS_TYPE_SNES,
